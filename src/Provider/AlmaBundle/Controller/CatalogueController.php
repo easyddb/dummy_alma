@@ -11,7 +11,8 @@ class CatalogueController extends Controller
     public function availabilityAction()
     {
         $catalogue_record_key = $this->getRequest()->get('catalogueRecordKey');
-        if (empty($catalogue_record_key)) {
+        if (empty($catalogue_record_key))
+        {
             return $this->render('ProviderAlmaBundle:Default:empty.html.twig');
         }
 
@@ -34,7 +35,8 @@ class CatalogueController extends Controller
 
         $true_false = array('true', 'false');
         $yes_no = array('no', 'yes');
-        foreach ($ids as $id) {
+        foreach ($ids as $id)
+        {
             $record = $records->addChild('catalogueRecord');
             $is_reservable = mt_rand(0, 1);
             $record->addAttribute('isReservable', $true_false[$is_reservable]);
