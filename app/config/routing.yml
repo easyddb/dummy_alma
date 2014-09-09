@@ -1,0 +1,4 @@
+provider_alma:
+    resource: "@ProviderAlmaBundle/Resources/config/routing.yml"
+    prefix:   /
+
