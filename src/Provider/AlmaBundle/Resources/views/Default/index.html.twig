@@ -1,0 +1,19 @@
+{# src/Provider/AlmaBundle/Resources/views/Default/index,html.twig #}
+{% extends '::base.html.twig' %}
+
+{% block body %}
+  <div class="wrapper">
+    <h2>Index page of alma mock provider service.</h2>
+    <h3>Supported endpoints:</h3>
+    <p><a href="/alma/catalogue/availability">/alma/catalogue/availability</a></p>
+    <p><a href="/alma/patron/debts">/alma/patron/debts</a></p>
+    <p><a href="/alma/patron/informationExtended">/alma/patron/informationExtended</a></p>
+    <p><a href="/alma/patron/loans">/alma/patron/loans</a></p>
+    <p><a href="/alma/patron/loans/renew">/alma/patron/loans/renew</a></p>
+    <p><a href="/alma/patron/reservations">/alma/patron/reservations</a></p>
+    <p><a href="/alma/patron/reservations/add">/alma/patron/reservations/add</a></p>
+    <p><a href="/alma/patron/reservations/change">/alma/patron/reservations/change</a></p>
+    <p><a href="/alma/patron/preferences/change">/alma/patron/preferences/change</a></p>
+    <p><a href="/alma/reservation/branches">/alma/reservation/branches</a></p>
+  </div>
+{% endblock %}

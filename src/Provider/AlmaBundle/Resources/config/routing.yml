@@ -1,0 +1,35 @@
+homepage:
+    path: /
+    defaults: { _controller: ProviderAlmaBundle:Default:index }
+availability:
+    path: /alma/catalogue/availability
+    defaults: { _controller: ProviderAlmaBundle:Catalogue:availability }
+debts:
+    path: /alma/patron/debts
+    defaults: { _controller: ProviderAlmaBundle:Patron:debts }
+patron:
+    path: /alma/patron/informationExtended
+    defaults: { _controller: ProviderAlmaBundle:Patron:informationExtended }
+loans:
+    path: /alma/patron/loans
+    defaults: { _controller: ProviderAlmaBundle:Patron:loans }
+reservations:
+    path: /alma/patron/reservations
+    defaults: { _controller: ProviderAlmaBundle:Patron:reservations }
+branches:
+    path: /alma/{type}/branches
+    defaults: { _controller: ProviderAlmaBundle:Reservation:branches, type: reservation }
+    requirements:
+        type: reservation|organisation
+departments:
+    path: /alma/organisation/departments
+    defaults: { _controller: ProviderAlmaBundle:Organisation:departments }
+locations:
+    path: /alma/organisation/locations
+    defaults: { _controller: ProviderAlmaBundle:Organisation:locations }
+sublocations:
+    path: /alma/organisation/subLocations
+    defaults: { _controller: ProviderAlmaBundle:Organisation:sublocations }
+collections:
+    path: /alma/organisation/collections
+    defaults: { _controller: ProviderAlmaBundle:Organisation:collections }

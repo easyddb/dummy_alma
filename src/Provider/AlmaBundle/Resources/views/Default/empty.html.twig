@@ -1,0 +1,10 @@
+{# src/Provider/AlmaBundle/Resources/views/Default/index,html.twig #}
+{% extends '::base.html.twig' %}
+
+{% block body %}
+  <h1>Proxy Error</h1>
+  <p>The proxy server received an invalid response from an upstream server.<br />
+    The proxy server could not handle the request <em><a href="/alma/catalogue/availability">GET&nbsp;/alma/catalogue/availability</a></em>.
+    <p>Reason: <strong>Error reading from remote server</strong></p>
+  </p>
+{% endblock %}
