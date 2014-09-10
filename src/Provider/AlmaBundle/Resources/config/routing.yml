@@ -10,6 +10,9 @@ debts:
 patron:
     path: /alma/patron/informationExtended
     defaults: { _controller: ProviderAlmaBundle:Patron:informationExtended }
+patron_preferences:
+    path: /alma/patron/preferences/change
+    defaults: { _controller: ProviderAlmaBundle:Patron:preferencesChange }
 loans:
     path: /alma/patron/loans
     defaults: { _controller: ProviderAlmaBundle:Patron:loans }

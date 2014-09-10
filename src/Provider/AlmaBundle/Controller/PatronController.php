@@ -18,6 +18,9 @@ class PatronController extends Controller
 
         if (empty($this->borr_card) || empty($this->pin_code))
         {
+            $this->borr_card = NULL;
+            $this->pin_code = NULL;
+
             return FALSE;
         }
 
@@ -414,6 +417,69 @@ class PatronController extends Controller
         $status = $get_loans_response->addChild('status');
         $status->addAttribute('key', 'borrCardNotFound');
         $status->addAttribute('value', 'error');
+
+        return $xml->asXML();
+    }
+
+    public function preferencesChangeAction()
+    {
+        $this->checkPatronCredentials();
+
+        $patron = $this->getDoctrine()
+            ->getRepository('ProviderAlmaBundle:Patron')
+            ->getPatronByCredentials($this->borr_card, $this->pin_code);
+
+        $branch_id = $this->getRequest()->get('patronBranch');
+        $branch = $this->getDoctrine()
+            ->getRepository('ProviderAlmaBundle:Branches')
+            ->findOneById($branch_id);
+
+
+        if (isset($patron[0]))
+        {
+            $patron = $patron[0];
+
+            $key = 'moduleNotAvailable';
+            $value = 'ok';
+
+            if (!empty($branch_id) && empty($branch))
+            {
+                $value = 'error';
+                $patron_branch = $patron->getPatronbranch();
+                $branch_id = is_object($patron_branch) ? $patron_branch->getId() : '';
+            }
+            elseif (empty($branch_id) || !empty($branch))
+            {
+                $em = $this->getDoctrine()->getManager();
+                $patron->setPatronbranch($branch);
+                $em->persist($patron);
+                $em->flush();
+            }
+        }
+        else
+        {
+            $key = 'borrCardNotFound';
+            $value = 'error';
+            $branch_id = '';
+        }
+
+        $data = $this->createPreferencesChangeResponse($key, $value, $branch_id);
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'text/xml');
+
+        return $response;
+    }
+
+    private function createPreferencesChangeResponse($key, $value, $branch_id)
+    {
+        $xml = AlmaBundle\AlmaUtils::createXmlHeader();
+
+        $preferences_change_response = $xml->addChild('changePatronPreferencesResponse');
+        $status = $preferences_change_response->addChild('status');
+        $status->addAttribute('key', $key);
+        $status->addAttribute('value', $value);
+        $patron_preferences = $preferences_change_response->addChild('patronPreferences');
+        $patron_preferences->addAttribute('patronBranch', $branch_id);
 
         return $xml->asXML();
     }
