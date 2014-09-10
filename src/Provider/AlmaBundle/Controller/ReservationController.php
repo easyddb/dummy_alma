@@ -7,7 +7,7 @@ use Provider\AlmaBundle;
 
 class ReservationController extends Controller
 {
-    public function branchesAction($type)
+    public function branchesAction()
     {
         $organisations = $this->fetchAllOrganisations();
 

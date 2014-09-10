@@ -137,16 +137,6 @@ class Reservations
     private $patron;
 
     /**
-     * @var \Provider\AlmaBundle\Entity\Branches
-     *
-     * @ORM\ManyToOne(targetEntity="Provider\AlmaBundle\Entity\Branches")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="reservationPickUpBranch", referencedColumnName="bra_id")
-     * })
-     */
-    private $reservationpickupbranch;
-
-    /**
      * @var \Provider\AlmaBundle\Entity\Organisations
      *
      * @ORM\ManyToOne(targetEntity="Provider\AlmaBundle\Entity\Organisations")
@@ -155,6 +145,16 @@ class Reservations
      * })
      */
     private $organisation;
+
+    /**
+     * @var \Provider\AlmaBundle\Entity\Branches
+     *
+     * @ORM\ManyToOne(targetEntity="Provider\AlmaBundle\Entity\Branches")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="reservationPickUpBranch", referencedColumnName="bra_id")
+     * })
+     */
+    private $reservationpickupbranch;
 
 
 
@@ -537,29 +537,6 @@ class Reservations
     }
 
     /**
-     * Set reservationpickupbranch
-     *
-     * @param \Provider\AlmaBundle\Entity\Branches $reservationpickupbranch
-     * @return Reservations
-     */
-    public function setReservationpickupbranch(\Provider\AlmaBundle\Entity\Branches $reservationpickupbranch = null)
-    {
-        $this->reservationpickupbranch = $reservationpickupbranch;
-
-        return $this;
-    }
-
-    /**
-     * Get reservationpickupbranch
-     *
-     * @return \Provider\AlmaBundle\Entity\Branches 
-     */
-    public function getReservationpickupbranch()
-    {
-        return $this->reservationpickupbranch;
-    }
-
-    /**
      * Set organisation
      *
      * @param \Provider\AlmaBundle\Entity\Organisations $organisation
@@ -580,5 +557,28 @@ class Reservations
     public function getOrganisation()
     {
         return $this->organisation;
+    }
+
+    /**
+     * Set reservationpickupbranch
+     *
+     * @param \Provider\AlmaBundle\Entity\Branches $reservationpickupbranch
+     * @return Reservations
+     */
+    public function setReservationpickupbranch(\Provider\AlmaBundle\Entity\Branches $reservationpickupbranch = null)
+    {
+        $this->reservationpickupbranch = $reservationpickupbranch;
+
+        return $this;
+    }
+
+    /**
+     * Get reservationpickupbranch
+     *
+     * @return \Provider\AlmaBundle\Entity\Branches 
+     */
+    public function getReservationpickupbranch()
+    {
+        return $this->reservationpickupbranch;
     }
 }

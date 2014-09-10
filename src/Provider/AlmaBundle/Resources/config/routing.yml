@@ -16,11 +16,12 @@ loans:
 reservations:
     path: /alma/patron/reservations
     defaults: { _controller: ProviderAlmaBundle:Patron:reservations }
-branches:
-    path: /alma/{type}/branches
-    defaults: { _controller: ProviderAlmaBundle:Reservation:branches, type: reservation }
-    requirements:
-        type: reservation|organisation
+branches_res:
+    path: /alma/reservation/branches
+    defaults: { _controller: ProviderAlmaBundle:Reservation:branches }
+branches_org:
+    path: /alma/organisation/branches
+    defaults: { _controller: ProviderAlmaBundle:Organisation:branches }
 departments:
     path: /alma/organisation/departments
     defaults: { _controller: ProviderAlmaBundle:Organisation:departments }

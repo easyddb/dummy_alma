@@ -226,5 +226,61 @@ class OrganisationController extends Controller
 
         return $xml->asXML();
     }
+
+    public function branchesAction()
+    {
+        $branches = $this->fetchAllBranches();
+
+        $data = $this->createBranchesInformationResponse($branches);
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'text/xml');
+
+        return $response;
+    }
+
+    private function fetchAllBranches()
+    {
+        $branches = $this->getDoctrine()
+            ->getRepository('ProviderAlmaBundle:BranchesOrg')
+            ->findAll();
+
+        return $branches;
+    }
+
+    private function createBranchesInformationResponse($branches)
+    {
+        $xml = AlmaBundle\AlmaUtils::createXmlHeader();
+
+        $get_branches_response = $xml->addChild('getBranchesResponse');
+        $status = $get_branches_response->addChild('status');
+        $status->addAttribute('key', 'moduleNotAvailable');
+        $status->addAttribute('value', 'ok');
+        $_branches = $get_branches_response->addChild('branches');
+
+        if (is_array($branches) && !empty($branches))
+        {
+            foreach ($branches as $branch)
+            {
+                $_dep = $_branches->addChild('branch');
+                $_dep->addAttribute('id', $branch->getId());
+
+                $lang = $branch->getLanguage();
+
+                $codes = $_dep->addChild('codes');
+                $code = $codes->addChild('code', $branch->getCode());
+                $code->addAttribute('language', $lang);
+
+                $shortnames = $_dep->addChild('shortnames');
+                $shortname = $shortnames->addChild('shortname', $branch->getShortname());
+                $shortname->addAttribute('language', $lang);
+
+                $names = $_dep->addChild('names');
+                $name = $names->addChild('name', $branch->getName());
+                $name->addAttribute('language', $lang);
+            }
+        }
+
+        return $xml->asXML();
+    }
 }
 
