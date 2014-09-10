@@ -113,6 +113,37 @@ INSERT INTO `branches` VALUES (1,'hj~oe','hjø','hjø','Hjørring','da_DK',1),(2
 UNLOCK TABLES;
 
 --
+-- Table structure for table `branches_org`
+--
+
+DROP TABLE IF EXISTS `branches_org`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `branches_org` (
+  `bra_id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` varchar(32) NOT NULL,
+  `code` varchar(32) NOT NULL,
+  `shortname` varchar(32) NOT NULL,
+  `name` varchar(256) NOT NULL,
+  `language` varchar(32) NOT NULL,
+  PRIMARY KEY (`bra_id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `code` (`code`),
+  KEY `language` (`language`)
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `branches_org`
+--
+
+LOCK TABLES `branches_org` WRITE;
+/*!40000 ALTER TABLE `branches_org` DISABLE KEYS */;
+INSERT INTO `branches_org` VALUES (1,'','','','','da_DK'),(2,'bin','bin','bin','Børneinstitution','da_DK'),(3,'bus','bus','bus','Bogbus','da_DK'),(4,'dag','dag','dag','KAN IKKE LÅNES -(dag)','da_DK'),(5,'fje','fje','fje','Fjernlånte materialer','da_DK'),(6,'hir','hir','hir','Hirtshals','da_DK'),(7,'hj~oe','hjø','hjø','Hjørring','da_DK'),(8,'l~oek','løk','løk','Løkken','da_DK'),(9,'sin','sin','sin','Sindal','da_DK'),(10,'vkm','vkm','vkm','Vendsyssel Kunstmuseum','da_DK'),(11,'vr~aa','vrå','vrå','Vrå','da_DK');
+/*!40000 ALTER TABLE `branches_org` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `collections`
 --
 
@@ -163,7 +194,7 @@ CREATE TABLE `debts` (
   KEY `fk_debt_org_idx` (`organisation`),
   CONSTRAINT `fk_debt_org` FOREIGN KEY (`organisation`) REFERENCES `organisations` (`org_id`) ON UPDATE CASCADE,
   CONSTRAINT `fk_debt_patron` FOREIGN KEY (`patron`) REFERENCES `patron` (`patr_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -458,8 +489,8 @@ CREATE TABLE `reservations` (
   KEY `fk_res_patron_idx` (`patron`),
   KEY `fk_res_branch_idx` (`reservationPickUpBranch`),
   KEY `fk_res_organisation_idx` (`organisation`),
-  CONSTRAINT `fk_res_organisation` FOREIGN KEY (`organisation`) REFERENCES `organisations` (`org_id`) ON UPDATE CASCADE,
   CONSTRAINT `fk_res_branch` FOREIGN KEY (`reservationPickUpBranch`) REFERENCES `branches` (`bra_id`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_res_organisation` FOREIGN KEY (`organisation`) REFERENCES `organisations` (`org_id`) ON UPDATE CASCADE,
   CONSTRAINT `fk_res_patron` FOREIGN KEY (`patron`) REFERENCES `patron` (`patr_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -514,4 +545,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-09-09 20:21:20
+-- Dump completed on 2014-09-10  8:50:02
