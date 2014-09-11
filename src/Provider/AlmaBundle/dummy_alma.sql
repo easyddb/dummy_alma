@@ -477,7 +477,7 @@ CREATE TABLE `reservations` (
   `isDeletable` varchar(32) NOT NULL,
   `createDate` int(11) NOT NULL,
   `id` int(11) NOT NULL,
-  `catalogueRecordId` varchar(32) NOT NULL,
+  `catalogueRecordId` varchar(128) NOT NULL,
   `reservationStatusKey` varchar(32) NOT NULL,
   `reservationStatusValue` varchar(32) NOT NULL,
   `note` varchar(255) DEFAULT NULL,
@@ -492,7 +492,7 @@ CREATE TABLE `reservations` (
   CONSTRAINT `fk_res_branch` FOREIGN KEY (`reservationPickUpBranch`) REFERENCES `branches` (`bra_id`) ON UPDATE CASCADE,
   CONSTRAINT `fk_res_organisation` FOREIGN KEY (`organisation`) REFERENCES `organisations` (`org_id`) ON UPDATE CASCADE,
   CONSTRAINT `fk_res_patron` FOREIGN KEY (`patron`) REFERENCES `patron` (`patr_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -545,4 +545,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-09-11  9:31:02
+-- Dump completed on 2014-09-11 10:14:17

@@ -78,7 +78,7 @@ class Reservations
     /**
      * @var string
      *
-     * @ORM\Column(name="catalogueRecordId", type="string", length=32, nullable=false)
+     * @ORM\Column(name="catalogueRecordId", type="string", length=128, nullable=false)
      */
     private $cataloguerecordid;
 
@@ -174,7 +174,7 @@ class Reservations
     /**
      * Get validtodate
      *
-     * @return integer 
+     * @return integer
      */
     public function getValidtodate()
     {
@@ -197,7 +197,7 @@ class Reservations
     /**
      * Get validfromdate
      *
-     * @return integer 
+     * @return integer
      */
     public function getValidfromdate()
     {
@@ -220,7 +220,7 @@ class Reservations
     /**
      * Get status
      *
-     * @return string 
+     * @return string
      */
     public function getStatus()
     {
@@ -243,7 +243,7 @@ class Reservations
     /**
      * Get reservationtype
      *
-     * @return string 
+     * @return string
      */
     public function getReservationtype()
     {
@@ -266,7 +266,7 @@ class Reservations
     /**
      * Get queueno
      *
-     * @return integer 
+     * @return integer
      */
     public function getQueueno()
     {
@@ -289,7 +289,7 @@ class Reservations
     /**
      * Get iseditable
      *
-     * @return string 
+     * @return string
      */
     public function getIseditable()
     {
@@ -312,7 +312,7 @@ class Reservations
     /**
      * Get isdeletable
      *
-     * @return string 
+     * @return string
      */
     public function getIsdeletable()
     {
@@ -335,7 +335,7 @@ class Reservations
     /**
      * Get createdate
      *
-     * @return integer 
+     * @return integer
      */
     public function getCreatedate()
     {
@@ -358,7 +358,7 @@ class Reservations
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -381,7 +381,7 @@ class Reservations
     /**
      * Get cataloguerecordid
      *
-     * @return string 
+     * @return string
      */
     public function getCataloguerecordid()
     {
@@ -404,7 +404,7 @@ class Reservations
     /**
      * Get reservationstatuskey
      *
-     * @return string 
+     * @return string
      */
     public function getReservationstatuskey()
     {
@@ -427,7 +427,7 @@ class Reservations
     /**
      * Get reservationstatusvalue
      *
-     * @return string 
+     * @return string
      */
     public function getReservationstatusvalue()
     {
@@ -450,7 +450,7 @@ class Reservations
     /**
      * Get note
      *
-     * @return string 
+     * @return string
      */
     public function getNote()
     {
@@ -473,7 +473,7 @@ class Reservations
     /**
      * Get pickupno
      *
-     * @return integer 
+     * @return integer
      */
     public function getPickupno()
     {
@@ -496,7 +496,7 @@ class Reservations
     /**
      * Get pickupexpiredate
      *
-     * @return integer 
+     * @return integer
      */
     public function getPickupexpiredate()
     {
@@ -506,7 +506,7 @@ class Reservations
     /**
      * Get reserId
      *
-     * @return integer 
+     * @return integer
      */
     public function getReserId()
     {
@@ -529,7 +529,7 @@ class Reservations
     /**
      * Get patron
      *
-     * @return \Provider\AlmaBundle\Entity\Patron 
+     * @return \Provider\AlmaBundle\Entity\Patron
      */
     public function getPatron()
     {
@@ -552,7 +552,7 @@ class Reservations
     /**
      * Get organisation
      *
-     * @return \Provider\AlmaBundle\Entity\Organisations 
+     * @return \Provider\AlmaBundle\Entity\Organisations
      */
     public function getOrganisation()
     {
@@ -575,7 +575,7 @@ class Reservations
     /**
      * Get reservationpickupbranch
      *
-     * @return \Provider\AlmaBundle\Entity\Branches 
+     * @return \Provider\AlmaBundle\Entity\Branches
      */
     public function getReservationpickupbranch()
     {
