@@ -22,7 +22,7 @@ class Reservations
     /**
      * @var integer
      *
-     * @ORM\Column(name="validFromDate", type="integer", nullable=false)
+     * @ORM\Column(name="validFromDate", type="integer", nullable=true)
      */
     private $validfromdate;
 

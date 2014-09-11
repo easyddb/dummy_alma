@@ -133,6 +133,16 @@ class Patron
     private $emailaddress;
 
     /**
+     * @var \Provider\AlmaBundle\Entity\Branches
+     *
+     * @ORM\ManyToOne(targetEntity="Provider\AlmaBundle\Entity\Branches")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="patronBranch", referencedColumnName="bra_id")
+     * })
+     */
+    private $patronbranch;
+
+    /**
      * @var \Provider\AlmaBundle\Entity\Borrcard
      *
      * @ORM\ManyToOne(targetEntity="Provider\AlmaBundle\Entity\Borrcard")
@@ -151,16 +161,6 @@ class Patron
      * })
      */
     private $address;
-
-    /**
-     * @var \Provider\AlmaBundle\Entity\Branches
-     *
-     * @ORM\ManyToOne(targetEntity="Provider\AlmaBundle\Entity\Branches")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="patronBranch", referencedColumnName="bra_id")
-     * })
-     */
-    private $patronbranch;
 
 
 
@@ -520,6 +520,29 @@ class Patron
     }
 
     /**
+     * Set patronbranch
+     *
+     * @param \Provider\AlmaBundle\Entity\Branches $patronbranch
+     * @return Patron
+     */
+    public function setPatronbranch(\Provider\AlmaBundle\Entity\Branches $patronbranch = null)
+    {
+        $this->patronbranch = $patronbranch;
+
+        return $this;
+    }
+
+    /**
+     * Get patronbranch
+     *
+     * @return \Provider\AlmaBundle\Entity\Branches
+     */
+    public function getPatronbranch()
+    {
+        return $this->patronbranch;
+    }
+
+    /**
      * Set borrcard
      *
      * @param \Provider\AlmaBundle\Entity\Borrcard $borrcard
@@ -563,28 +586,5 @@ class Patron
     public function getAddress()
     {
         return $this->address;
-    }
-
-    /**
-     * Set patronbranch
-     *
-     * @param \Provider\AlmaBundle\Entity\Branches $patronbranch
-     * @return Patron
-     */
-    public function setPatronbranch(\Provider\AlmaBundle\Entity\Branches $patronbranch = null)
-    {
-        $this->patronbranch = $patronbranch;
-
-        return $this;
-    }
-
-    /**
-     * Get patronbranch
-     *
-     * @return \Provider\AlmaBundle\Entity\Branches
-     */
-    public function getPatronbranch()
-    {
-        return $this->patronbranch;
     }
 }
