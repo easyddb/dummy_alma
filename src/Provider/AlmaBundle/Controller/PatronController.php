@@ -483,4 +483,187 @@ class PatronController extends Controller
 
         return $xml->asXML();
     }
+
+    public function reservationsAddAction()
+    {
+        $patron_cred = $this->checkPatronCredentials();
+        $reservable = $this->getRequest()->get('reservable');
+        $pickup_branch = $this->getRequest()->get('reservationPickUpBranch', 'hj~oe');
+        $valid_from = $this->getRequest()->get('reservationValidFrom', '');
+        $valid_to = $this->getRequest()->get('reservationValidTo', '2025-01-01');
+
+        $patron = $this->getDoctrine()
+          ->getRepository('ProviderAlmaBundle:Patron')
+          ->getPatronByCredentials($this->borr_card, $this->pin_code);
+
+        $branch = $this->getDoctrine()
+            ->getRepository('ProviderAlmaBundle:Branches')
+            ->findOneById($pickup_branch);
+
+        if (isset($patron[0]))
+        {
+            $reservation = $this->getDoctrine()
+                ->getRepository('ProviderAlmaBundle:Reservations')
+                ->findOneBy(array(
+                  'patron' => $patron[0],
+                  'cataloguerecordid' => $reservable,
+                ));
+        }
+
+        $state = array(
+          'valid_to_date' => $valid_to,
+          'valid_from' => $valid_from,
+          'branch' => $pickup_branch,
+        );
+
+        if (!isset($patron[0]))
+        {
+            $state += array(
+                'status_key' => 'borrCardNotFound',
+                'status_value' => 'ok',
+                'res_status_key' => 'reservationDenied',
+                'res_status_value' => 'reservationNotOk',
+            );
+            $data = $this->createReservationsAddActionErrorResponse($state);
+        }
+        elseif (is_object($reservation))
+        {
+            $state += array(
+                'status_key' => 'reservationNotFound',
+                'status_value' => 'ok',
+                'res_status_key' => 'reservationAlreadyReserved',
+                'res_status_value' => 'reservationNotOk',
+            );
+
+            $data = $this->createReservationsAddActionErrorResponse($state);
+        }
+        elseif (empty($reservable))
+        {
+            $state += array(
+                'status_key' => 'reservationNotFound',
+                'status_value' => 'ok',
+                'res_status_key' => 'reservationNoHolding',
+                'res_status_value' => 'reservationNotOk',
+            );
+
+            $data = $this->createReservationsAddActionErrorResponse($state);
+        }
+        elseif (!is_object($branch))
+        {
+            $state += array(
+                'status_key' => 'reservationNotFound',
+                'status_value' => 'ok',
+                'res_status_key' => 'reservationDenied',
+                'res_status_value' => 'reservationNotOk',
+            );
+
+            $data = $this->createReservationsAddActionErrorResponse($state);
+        }
+        else
+        {
+            $reservation = new AlmaBundle\Entity\Reservations();
+            $reservation->setPatron($patron[0]);
+            $valid_to = AlmaBundle\AlmaUtils::formatTimestamp($valid_to);
+            $reservation->setValidtodate($valid_to);
+            if (!empty($valid_from))
+            {
+                $valid_from = AlmaBundle\AlmaUtils::formatTimestamp($valid_from);
+            }
+            $reservation->setValidfromdate($valid_from);
+            $reservation->setStatus('active');
+            $reservation->setReservationtype('normal');
+            $reservation->setReservationpickupbranch($branch);
+            $reservation->setOrganisation($branch->getOrganisation());
+            $reservation->setIseditable('yes');
+            $reservation->setIsdeletable('yes');
+            $create_date = AlmaBundle\AlmaUtils::formatTimestamp(date(ALMA_DATE_FORMAT, time()));
+            $reservation->setCreatedate($create_date);
+            $reservation->setId(mt_rand(1000000, 9000000));
+            $reservation->setCataloguerecordid($reservable);
+            $reservation->setReservationstatuskey('reservationOnShelf');
+            $reservation->setReservationstatusvalue('reservationOk');
+            $reservation->setQueueno(1);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($reservation);
+            $em->flush();
+
+            $data = $this->createReservationsAddResponse($reservation);
+        }
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'text/xml');
+
+        return $response;
+    }
+
+    private function createReservationsAddResponse(AlmaBundle\Entity\Reservations $reservation)
+    {
+        $xml = AlmaBundle\AlmaUtils::createXmlHeader();
+
+        $reservation_add_response = $xml->addChild('addReservationResponse');
+
+        $status = $reservation_add_response->addChild('status');
+        $status->addAttribute('key', 'moduleNotAvailable');
+        $status->addAttribute('value', 'ok');
+
+        $_reservation = $reservation_add_response->addChild('reservation');
+        $valid_to_date = AlmaBundle\AlmaUtils::formatDate($reservation->getValidtodate());
+        $_reservation->addAttribute('validToDate', $valid_to_date);
+        $valid_from_date = $reservation->getValidfromdate();
+        if (!empty($valid_from_date))
+        {
+            $valid_from_date = AlmaBundle\AlmaUtils::formatDate($valid_from_date);
+        }
+        $_reservation->addAttribute('validFromDate', $valid_from_date);
+        $_reservation->addAttribute('status', $reservation->getStatus());
+        $_reservation->addAttribute('reservationType', 'normal');
+        $_reservation->addAttribute('reservationPickUpBranch', $reservation->getReservationpickupbranch()->getId());
+        $_reservation->addAttribute('queueNo', $reservation->getQueueno());
+        $_reservation->addAttribute('organisationId', $reservation->getReservationpickupbranch()->getOrganisation()->getId());
+        $_reservation->addAttribute('isEditable', $reservation->getIseditable());
+        $_reservation->addAttribute('isDeletable', $reservation->getIsdeletable());
+        $_reservation->addAttribute('id', $reservation->getId());
+
+        $record = $_reservation->addChild('catalogueRecord');
+        $record->addAttribute('id', $reservation->getCataloguerecordid());
+
+        $res_status = $_reservation->addChild('reservationStatus');
+        $res_status->addAttribute('key', $reservation->getReservationstatuskey());
+        $res_status->addAttribute('value', $reservation->getReservationstatusvalue());
+
+
+        return $xml->asXML();
+    }
+
+    private function createReservationsAddActionErrorResponse($state = array())
+    {
+        $xml = AlmaBundle\AlmaUtils::createXmlHeader();
+
+        $reservation_add_response = $xml->addChild('addReservationResponse');
+        $status = $reservation_add_response->addChild('status');
+
+        $status->addAttribute('key', !empty($state['status_key']) ? $state['status_key'] : '');
+        $status->addAttribute('value', !empty($state['status_value']) ? $state['status_value'] : '');
+
+        $reservation = $reservation_add_response->addChild('reservation');
+        $reservation->addAttribute('validToDate', !empty($state['valid_to_date']) ? $state['valid_to_date'] : '2025-01-01');
+        $reservation->addAttribute('validFromDate', !empty($state['valid_from_date']) ? $state['valid_from_date'] : '');
+        $reservation->addAttribute('status', 'active');
+        $reservation->addAttribute('reservationType', 'normal');
+        $reservation->addAttribute('reservationPickUpBranch', $state['branch']);
+        $reservation->addAttribute('organisationId', 'DK-000000');
+        $reservation->addAttribute('isEditable', 'no');
+        $reservation->addAttribute('isDeletable', 'no');
+        $reservation->addAttribute('createDate', '');
+        $reservation->addAttribute('id', '0');
+
+        $catalogue = $reservation->addChild('catalogueRecord');
+        $catalogue->addAttribute('id', '');
+        $res_status = $reservation->addChild('reservationStatus');
+        $res_status->addAttribute('key', !empty($state['res_status_key']) ? $state['res_status_key'] : '');
+        $res_status->addAttribute('value', !empty($state['res_status_value']) ? $state['res_status_value'] : '');
+
+        return $xml->asXML();
+    }
 }
