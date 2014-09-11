@@ -392,7 +392,7 @@ CREATE TABLE `patron` (
   `phoneNumbersIsAddable` varchar(3) NOT NULL,
   `phoneNumber` int(11) NOT NULL,
   `patronBlocks` int(11) DEFAULT NULL,
-  `patronBranch` int(11) NOT NULL,
+  `patronBranch` int(11) DEFAULT NULL,
   `absentToDate` varchar(10) DEFAULT NULL,
   `absentFromDate` varchar(10) DEFAULT NULL,
   `absentId` varchar(16) DEFAULT NULL,
@@ -467,7 +467,7 @@ CREATE TABLE `reservations` (
   `reser_id` int(11) NOT NULL AUTO_INCREMENT,
   `patron` int(11) NOT NULL,
   `validToDate` int(11) NOT NULL,
-  `validFromDate` int(11) NOT NULL,
+  `validFromDate` int(11) DEFAULT NULL,
   `status` varchar(32) NOT NULL,
   `reservationType` varchar(32) NOT NULL,
   `reservationPickUpBranch` int(11) NOT NULL,
@@ -492,7 +492,7 @@ CREATE TABLE `reservations` (
   CONSTRAINT `fk_res_branch` FOREIGN KEY (`reservationPickUpBranch`) REFERENCES `branches` (`bra_id`) ON UPDATE CASCADE,
   CONSTRAINT `fk_res_organisation` FOREIGN KEY (`organisation`) REFERENCES `organisations` (`org_id`) ON UPDATE CASCADE,
   CONSTRAINT `fk_res_patron` FOREIGN KEY (`patron`) REFERENCES `patron` (`patr_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -545,4 +545,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-09-10  8:50:02
+-- Dump completed on 2014-09-11  9:31:02
