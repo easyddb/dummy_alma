@@ -4,6 +4,7 @@ namespace Provider\AlmaBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Provider\AlmaBundle;
+use Symfony\Component\DependencyInjection;
 
 class OrganisationController extends Controller
 {
@@ -279,6 +280,44 @@ class OrganisationController extends Controller
                 $name->addAttribute('language', $lang);
             }
         }
+
+        return $xml->asXML();
+    }
+
+    public function detailAction()
+    {
+        $catalogue_record_key = $this->getRequest()->get('catalogueRecordKey');
+
+        $data = $this->createDetailNotFoundInformationResponse();
+        if (!empty($catalogue_record_key))
+        {
+            $kernel = $this->get('kernel');
+            try
+            {
+                $path = $kernel->locateResource('@ProviderAlmaBundle/Resources/alma_xml/' . $catalogue_record_key . '.xml');
+                $contents = file_get_contents($path);
+                $xml = new \SimpleXMLElement($contents);
+                $data = $xml->asXML();
+            }
+            catch (\InvalidArgumentException $ex) {
+
+            }
+        }
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'text/xml');
+
+        return $response;
+    }
+
+    private function createDetailNotFoundInformationResponse()
+    {
+        $xml = AlmaBundle\AlmaUtils::createXmlHeader();
+
+        $get_branches_response = $xml->addChild('getCatalogueRecordDetailResponse');
+        $status = $get_branches_response->addChild('status');
+        $status->addAttribute('key', 'catalogueRecordNotFound');
+        $status->addAttribute('value', 'error');
 
         return $xml->asXML();
     }

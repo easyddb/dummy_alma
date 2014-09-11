@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AlmaMessage xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:alma="http://www.axiell.com/Schema/alma/v1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <getCatalogueRecordDetailResponse>
+    <status key="moduleNotAvailable" value="ok" />
+    <detailCatalogueRecord showRegionalReservationRadioGroup="false" reservationButtonStatus="reservationOfPeriodical" showReservationButton="yes" nofReservations="1" nofLoansYear="-1" nofLoansTotal="-1" nofAvailableForLoan="0" titleSeries="(Sociale publikationer ; 5)" targetAudience="a" shelfMark="38.61 &gt; Hedegaard" resourceType="physical" openUrl="&amp;aulast=Hedeg%E5rd%20J%F8rgensen&amp;aufirst=Leif&amp;title=Folkepension%20og%20delpension" mediaClassIcon="periodical" mediaClass="periodical" id="10122945" classificationCode="38.61" category="nonFictionCategory" recordType="catalogue">
+      <authors>
+        <author role="author" value="Hedegaard Jørgensen, Leif" />
+      </authors>
+      <descriptions>
+        <description value="Alt om samfundets service over for vore ældre efter pensionslovgivning, bistandslovgivning og den øvrige sociale lovgivning" />
+      </descriptions>
+      <compositeHoldings>
+        <compositeHolding status="availableForLoan" value="2014">
+          <compositeHolding status="availableForLoan" value="130. udgave">
+            <holdings>
+              <holding reservable="10122945ZXZX130. udgaveZX2014ZXZX" status="nonAvailableForLoan" nofOrdered="0" nofCheckedOut="0" nofReference="0" nofTotal="1" collectionId="28" subLocationId="" locationId="" departmentId="voy" branchId="hj~oe" organisationId="DK-000000" showReservationButton="yes" nofAvailableForLoan="1" shelfMark="38.61 &gt; Hedegaard" />
+            </holdings>
+          </compositeHolding>
+        </compositeHolding>
+      </compositeHoldings>
+      <languages>
+        <language value="dan" />
+      </languages>
+      <notes>
+        <note value="Leif Hedegaard Jørgensen" />
+        <note value="Omslagstitel: Folkepension, delpension : oversigt over sociale takster" />
+        <note value="Indgår også i: Social orientering" />
+        <note value="VO har: Sidste udgave. *" />
+      </notes>
+      <publisher>Idag</publisher>
+      <titles>
+        <title value="Folkepension og delpension" />
+      </titles>
+    </detailCatalogueRecord>
+  </getCatalogueRecordDetailResponse>
+</AlmaMessage>

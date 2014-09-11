@@ -37,3 +37,6 @@ sublocations:
 collections:
     path: /alma/organisation/collections
     defaults: { _controller: ProviderAlmaBundle:Organisation:collections }
+detail:
+    path: /alma/catalogue/detail
+    defaults: { _controller: ProviderAlmaBundle:Organisation:detail }
