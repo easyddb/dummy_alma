@@ -13,6 +13,12 @@ patron:
 patron_preferences:
     path: /alma/patron/preferences/change
     defaults: { _controller: ProviderAlmaBundle:Patron:preferencesChange }
+patron_absent:
+    path: /alma/patron/absent/change
+    defaults: { _controller: ProviderAlmaBundle:Patron:absentChange }
+patron_pincode:
+    path: /alma/patron/pinCode/change
+    defaults: { _controller: ProviderAlmaBundle:Patron:pincodeChange }
 loans:
     path: /alma/patron/loans
     defaults: { _controller: ProviderAlmaBundle:Patron:loans }

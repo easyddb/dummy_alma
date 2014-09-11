@@ -738,4 +738,99 @@ class PatronController extends Controller
 
         return $xml->asXML();
     }
+
+    public function absentChangeAction()
+    {
+        $this->checkPatronCredentials();
+
+        $absent_from = $this->getRequest()->get('absentFrom', '');
+        $absent_to = $this->getRequest()->get('absentTo', '');
+
+        $patron = $this->getDoctrine()
+            ->getRepository('ProviderAlmaBundle:Patron')
+            ->getPatronByCredentials($this->borr_card, $this->pin_code);
+
+        if (isset($patron[0]))
+        {
+            $absent_to = AlmaBundle\AlmaUtils::formatTimestamp($absent_to);
+            $patron[0]->setAbsenttodate($absent_to);
+            $absent_from = AlmaBundle\AlmaUtils::formatTimestamp($absent_from);
+            $patron[0]->setAbsentfromdate($absent_from);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($patron[0]);
+            $em->flush();
+
+            $data = $this->absentChangeActionResponse('moduleNotAvailable', 'ok');
+        }
+        else
+        {
+            $data = $this->absentChangeActionResponse('borrCardNotFound', 'error');
+        }
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'text/xml');
+
+        return $response;
+    }
+
+    private function absentChangeActionResponse($key, $value)
+    {
+        $xml = AlmaBundle\AlmaUtils::createXmlHeader();
+
+        $remove_reservation = $xml->addChild('changeAbsentDateResponse');
+        $status = $remove_reservation->addChild('status');
+        $status->addAttribute('key', $key);
+        $status->addAttribute('value', $value);
+
+        return $xml->asXML();
+    }
+
+    public function pincodeChangeAction()
+    {
+        $this->checkPatronCredentials();
+
+        $new_pincode = $this->getRequest()->get('pinCodeChange', '');
+
+        $patron = $this->getDoctrine()
+            ->getRepository('ProviderAlmaBundle:Patron')
+            ->getPatronByCredentials($this->borr_card, $this->pin_code);
+
+        if (isset($patron[0]) && !empty($new_pincode))
+        {
+            $borr_card = $patron[0]->getBorrcard();
+            $borr_card->setCardpin($new_pincode);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($borr_card);
+            $em->flush();
+
+            $data = $this->pincodeChangeActionResponse('moduleNotAvailable', 'ok');
+        }
+        elseif (empty($new_pincode))
+        {
+            $data = $this->pincodeChangeActionResponse('invalidPinCode', 'error');
+        }
+        else
+        {
+            $data = $this->pincodeChangeActionResponse('borrCardNotFound', 'error');
+        }
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'text/xml');
+
+        return $response;
+    }
+
+    private function pincodeChangeActionResponse($key, $value)
+    {
+        $xml = AlmaBundle\AlmaUtils::createXmlHeader();
+
+        $remove_reservation = $xml->addChild('changeAbsentDateResponse');
+        $status = $remove_reservation->addChild('status');
+        $status->addAttribute('key', $key);
+        $status->addAttribute('value', $value);
+
+        return $xml->asXML();
+    }
 }
