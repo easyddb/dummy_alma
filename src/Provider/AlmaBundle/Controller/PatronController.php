@@ -484,10 +484,11 @@ class PatronController extends Controller
         return $xml->asXML();
     }
 
-    public function reservationsAddAction()
+    public function reservationsOpAction($op)
     {
-        $patron_cred = $this->checkPatronCredentials();
-        $reservable = $this->getRequest()->get('reservable');
+        $this->checkPatronCredentials();
+        $key = ($op == 'add') ? 'reservable' : 'reservation';
+        $reservable = $this->getRequest()->get($key);
         $pickup_branch = $this->getRequest()->get('reservationPickUpBranch', 'hj~oe');
         $valid_from = $this->getRequest()->get('reservationValidFrom', '');
         $valid_to = $this->getRequest()->get('reservationValidTo', '2025-01-01');
@@ -502,12 +503,21 @@ class PatronController extends Controller
 
         if (isset($patron[0]))
         {
+            $criteria = array(
+              'patron' => $patron[0],
+            );
+
+            if ($op == 'add')
+            {
+                $criteria['cataloguerecordid'] = $reservable;
+            }
+            else
+            {
+                $criteria['id'] = $reservable;
+            }
             $reservation = $this->getDoctrine()
                 ->getRepository('ProviderAlmaBundle:Reservations')
-                ->findOneBy(array(
-                  'patron' => $patron[0],
-                  'cataloguerecordid' => $reservable,
-                ));
+                ->findOneBy($criteria);
         }
 
         $state = array(
@@ -524,9 +534,9 @@ class PatronController extends Controller
                 'res_status_key' => 'reservationDenied',
                 'res_status_value' => 'reservationNotOk',
             );
-            $data = $this->createReservationsAddActionErrorResponse($state);
+            $data = $this->createReservationsOpErrorResponse($state);
         }
-        elseif (is_object($reservation))
+        elseif (is_object($reservation) && $op == 'add')
         {
             $state += array(
                 'status_key' => 'reservationNotFound',
@@ -535,7 +545,7 @@ class PatronController extends Controller
                 'res_status_value' => 'reservationNotOk',
             );
 
-            $data = $this->createReservationsAddActionErrorResponse($state);
+            $data = $this->createReservationsOpErrorResponse($state);
         }
         elseif (empty($reservable))
         {
@@ -546,7 +556,7 @@ class PatronController extends Controller
                 'res_status_value' => 'reservationNotOk',
             );
 
-            $data = $this->createReservationsAddActionErrorResponse($state);
+            $data = $this->createReservationsOpErrorResponse($state);
         }
         elseif (!is_object($branch))
         {
@@ -557,12 +567,31 @@ class PatronController extends Controller
                 'res_status_value' => 'reservationNotOk',
             );
 
-            $data = $this->createReservationsAddActionErrorResponse($state);
+            $data = $this->createReservationsOpErrorResponse($state);
         }
         else
         {
-            $reservation = new AlmaBundle\Entity\Reservations();
-            $reservation->setPatron($patron[0]);
+            if ($op == 'add')
+            {
+                $reservation = new AlmaBundle\Entity\Reservations();
+                $reservation->setPatron($patron[0]);
+
+                $reservation->setStatus('active');
+                $reservation->setReservationtype('normal');
+                $reservation->setReservationpickupbranch($branch);
+                $reservation->setOrganisation($branch->getOrganisation());
+                $reservation->setIseditable('yes');
+                $reservation->setIsdeletable('yes');
+                $create_date = AlmaBundle\AlmaUtils::formatTimestamp(date(ALMA_DATE_FORMAT, time()));
+                $reservation->setCreatedate($create_date);
+                $reservation->setId(mt_rand(1000000, 9000000));
+                $reservation->setCataloguerecordid($reservable);
+                $reservation->setReservationstatuskey('reservationOnShelf');
+                $reservation->setReservationstatusvalue('reservationOk');
+                $reservation->setQueueno(1);
+            }
+
+            $reservation->setReservationpickupbranch($branch);
             $valid_to = AlmaBundle\AlmaUtils::formatTimestamp($valid_to);
             $reservation->setValidtodate($valid_to);
             if (!empty($valid_from))
@@ -570,25 +599,12 @@ class PatronController extends Controller
                 $valid_from = AlmaBundle\AlmaUtils::formatTimestamp($valid_from);
             }
             $reservation->setValidfromdate($valid_from);
-            $reservation->setStatus('active');
-            $reservation->setReservationtype('normal');
-            $reservation->setReservationpickupbranch($branch);
-            $reservation->setOrganisation($branch->getOrganisation());
-            $reservation->setIseditable('yes');
-            $reservation->setIsdeletable('yes');
-            $create_date = AlmaBundle\AlmaUtils::formatTimestamp(date(ALMA_DATE_FORMAT, time()));
-            $reservation->setCreatedate($create_date);
-            $reservation->setId(mt_rand(1000000, 9000000));
-            $reservation->setCataloguerecordid($reservable);
-            $reservation->setReservationstatuskey('reservationOnShelf');
-            $reservation->setReservationstatusvalue('reservationOk');
-            $reservation->setQueueno(1);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($reservation);
             $em->flush();
 
-            $data = $this->createReservationsAddResponse($reservation);
+            $data = $this->createReservationsOpResponse($reservation);
         }
 
         $response = new Response($data);
@@ -597,7 +613,7 @@ class PatronController extends Controller
         return $response;
     }
 
-    private function createReservationsAddResponse(AlmaBundle\Entity\Reservations $reservation)
+    private function createReservationsOpResponse(AlmaBundle\Entity\Reservations $reservation)
     {
         $xml = AlmaBundle\AlmaUtils::createXmlHeader();
 
@@ -636,7 +652,7 @@ class PatronController extends Controller
         return $xml->asXML();
     }
 
-    private function createReservationsAddActionErrorResponse($state = array())
+    private function createReservationsOpErrorResponse($state = array())
     {
         $xml = AlmaBundle\AlmaUtils::createXmlHeader();
 
@@ -663,6 +679,62 @@ class PatronController extends Controller
         $res_status = $reservation->addChild('reservationStatus');
         $res_status->addAttribute('key', !empty($state['res_status_key']) ? $state['res_status_key'] : '');
         $res_status->addAttribute('value', !empty($state['res_status_value']) ? $state['res_status_value'] : '');
+
+        return $xml->asXML();
+    }
+
+    public function reservationsDeleteAction()
+    {
+        $this->checkPatronCredentials();
+        $reservation_id = $this->getRequest()->get('reservation', '0');
+
+        $patron = $this->getDoctrine()
+            ->getRepository('ProviderAlmaBundle:Patron')
+            ->getPatronByCredentials($this->borr_card, $this->pin_code);
+
+        if (isset($patron[0]))
+        {
+            $criteria = array(
+                'id' => $reservation_id,
+                'patron' => $patron[0]
+            );
+
+            $reservation = $this->getDoctrine()
+                ->getRepository('ProviderAlmaBundle:Reservations')
+                ->findOneBy($criteria);
+
+            if (is_object($reservation))
+            {
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($reservation);
+                $em->flush();
+
+                $data = $this->reservationsDeleteActionResponse('moduleNotAvailable', 'ok');
+            }
+            else
+            {
+                $data = $this->reservationsDeleteActionResponse('reservationNotFound', 'error');
+            }
+        }
+        else
+        {
+            $data = $this->reservationsDeleteActionResponse('borrCardNotFound', 'error');
+        }
+
+        $response = new Response($data);
+        $response->headers->set('Content-Type', 'text/xml');
+
+        return $response;
+    }
+
+    private function reservationsDeleteActionResponse($key, $value)
+    {
+        $xml = AlmaBundle\AlmaUtils::createXmlHeader();
+
+        $remove_reservation = $xml->addChild('removeReservationResponse');
+        $status = $remove_reservation->addChild('status');
+        $status->addAttribute('key', $key);
+        $status->addAttribute('value', $value);
 
         return $xml->asXML();
     }

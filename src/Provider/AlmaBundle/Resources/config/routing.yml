@@ -19,9 +19,14 @@ loans:
 reservations:
     path: /alma/patron/reservations
     defaults: { _controller: ProviderAlmaBundle:Patron:reservations }
-reservations_add:
-    path: /alma/patron/reservations/add
-    defaults: { _controller: ProviderAlmaBundle:Patron:reservationsAdd }
+reservations_op:
+    path: /alma/patron/reservations/{op}
+    defaults: { _controller: ProviderAlmaBundle:Patron:reservationsOp, op: add }
+    requirements:
+        op: add|change
+reservations_remove:
+    path: /alma/patron/reservations/remove
+    defaults: { _controller: ProviderAlmaBundle:Patron:reservationsDelete }
 branches_res:
     path: /alma/reservation/branches
     defaults: { _controller: ProviderAlmaBundle:Reservation:branches }
