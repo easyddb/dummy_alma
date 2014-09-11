@@ -2,24 +2,96 @@
 {% extends '::base.html.twig' %}
 
 {% block body %}
-  <div class="wrapper">
-    <h2>Index page of alma mock provider service.</h2>
-    <h3>Supported endpoints:</h3>
-    <p><a href="/web/alma/catalogue/availability">/alma/catalogue/availability</a></p>
-    <p><a href="/web/alma/catalogue/detail">/alma/catalogue/detail</a></p>
-    <p><a href="/web/alma/patron/debts">/alma/patron/debts</a></p>
-    <p><a href="/web/alma/patron/informationExtended">/alma/patron/informationExtended</a></p>
-    <p><a href="/web/alma/patron/loans">/alma/patron/loans</a></p>
-    <p><s><a href="/web/alma/patron/loans/renew">/alma/patron/loans/renew</a></s></p>
-    <p><a href="/web/alma/patron/reservations">/alma/patron/reservations</a></p>
-    <p><a href="/web/alma/patron/reservations/add">/alma/patron/reservations/add</a></p>
-    <p><s><a href="/web/alma/patron/reservations/change">/alma/patron/reservations/change</a></s></p>
-    <p><a href="/web/alma/patron/preferences/change">/alma/patron/preferences/change</a></p>
-    <p><a href="/web/alma/reservation/branches">/alma/reservation/branches</a></p>
-    <p><a href="/web/alma/organisation/branches">/alma/organisation/branches</a></p>
-    <p><a href="/web/alma/organisation/departments">/alma/reservation/departments</a></p>
-    <p><a href="/web/alma/organisation/locations">/alma/reservation/locations</a></p>
-    <p><a href="/web/alma/organisation/subLocations">/alma/reservation/subLocations</a></p>
-    <p><a href="/web/alma/organisation/collections">/alma/reservation/collections</a></p>
-  </div>
+    <div class="wrapper">
+        <h2>Index page of alma mock provider service.</h2>
+        <h3>Supported endpoints:</h3>
+        <div>
+            <p><a href="/web/alma/catalogue/availability">/alma/catalogue/availability</a></p>
+            <p>Availability for certain item(s). Random availability. <a href="/web/alma/catalogue/availability?catalogueRecordKey=2556346,2539180">Example</a></p>
+        </div>
+        <hr />
+        <div>
+            <a href="/web/alma/catalogue/detail">/alma/catalogue/detail</a>
+            <p>Holdings for certain items. This info is hard-cached. Means that a new entry should be added if needed <a href="/web/alma/catalogue/detail?catalogueRecordKey=10122945">Example</a></p>
+        </div>
+        <hr />
+        <div>
+            <a href="/web/alma/patron/debts">/alma/patron/debts</a>
+            <p>Debts for a certain user. <a href="/web/alma/patron/debts?borrCard=1111110022&pinCode=5555">Example</a></p>
+        </div>
+        <hr />
+        <div>
+            <a href="/web/alma/patron/informationExtended">/alma/patron/informationExtended</a>
+            <p>User data <a href="/web/alma/patron/informationExtended?borrCard=1111110022&pinCode=5555">Example</a></p>
+        </div>
+        <hr />
+        <div>
+            <a href="/web/alma/patron/loans">/alma/patron/loans</a>
+            <p>Loans for a certain user. <a href="/web/alma/patron/loans?borrCard=1111110022&pinCode=5555">Example</a></p>
+        </div>
+        <hr />
+        <div>
+            <s><a href="/web/alma/patron/loans/renew">/alma/patron/loans/renew</a></s>
+        </div>
+        <hr />
+        <div>
+            <a href="/web/alma/patron/reservations">/alma/patron/reservations</a>
+            <p>Reservations for a certain user. <a href="/web/alma/patron/reservations?borrCard=1111110022&pinCode=5555">Example</a></p>
+        </div>
+        <hr />
+        <div>
+            <a href="/web/alma/patron/reservations/add">/alma/patron/reservations/add</a>
+            <p>Add a new reservation. <a href="/web/alma/patron/reservations/add?borrCard=1111110022&pinCode=5555&reservationPickUpBranch=sin&reservable=10122945">Example</a></p>
+        </div>
+        <hr />
+        <div>
+            <a href="/web/alma/patron/reservations/change">/alma/patron/reservations/change</a>
+            <p>Update an existing reservation branch and interest period. <a href="/web/alma/patron/reservations/change?borrCard=1111110022&pinCode=5555&reservationPickUpBranch=sin&reservation=1414140&reservationValidFrom=2014-09-10&reservationValidTo=2015-03-08">Example</a></p>
+        </div>
+        <hr />
+        <div>
+            <a href="/web/alma/patron/preferences/change">/alma/patron/preferences/change</a>
+            <p>Change user's default branch <a href="/web/alma/patron/preferences/change?borrCard=1111110022&pinCode=5555&patronBranch=vr~aa">Example</a></p>
+        </div>
+        <hr />
+        <div>
+            <a href="/alma/patron/pinCode/change">/alma/patron/pinCode/change</a>
+            <p>Change user's pin code <a href="/web/alma/patron/pinCode/change?borrCard=1111110022&pinCode=5555&pinCodeChange=5555">Example</a></p>
+        </div>
+        <hr />
+        <div>
+            <a href="/alma/patron/absent/change">/alma/patron/absent/change</a>
+            <p>Change user's absent period <a href="/web/alma/patron/absent/change?borrCard=1111110022&pinCode=5555&absentFrom=2014-09-30&absentTo=2014-10-31">Example</a></p>
+        </div>
+        <hr />
+        <div>
+            <a href="/web/alma/reservation/branches">/alma/reservation/branches</a>
+            <p>List of available reservation branches.</p>
+        </div>
+        <hr />
+        <div>
+            <a href="/web/alma/organisation/branches">/alma/organisation/branches</a>
+            <p>List of available organisation branches.</p>
+        </div>
+        <hr />
+        <div>
+            <a href="/web/alma/organisation/departments">/alma/reservation/departments</a>
+            <p>List of available departments.</p>
+        </div>
+        <hr />
+        <div>
+            <a href="/web/alma/organisation/locations">/alma/reservation/locations</a>
+            <p>List of available locations.</p>
+        </div>
+        <hr />
+        <div>
+            <a href="/web/alma/organisation/subLocations">/alma/reservation/subLocations</a>
+            <p>List of available sublocations.</p>
+        </div>
+        <hr />
+        <div>
+            <a href="/web/alma/organisation/collections">/alma/reservation/collections</a>
+            <p>List of available collections.</p>
+        </div>
+    </div>
 {% endblock %}
