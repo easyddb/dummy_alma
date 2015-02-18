@@ -7,6 +7,8 @@ The service is based on [Symfony2](http://symfony.com/what-is-symfony)-framework
 
 By default, the application contains a SQL dump with a single user, couple of reservations, loans and debts.
 
+Existing instance located at (http://dummy-alma.inlead.dk/web/).
+
 User credentials are 1111110022/5555 (login/pass).
 
 
@@ -53,16 +55,18 @@ Installation
 Notes
 ========================
 
-Existing instance located at (http://dummy-alma.inlead.dk/web/).
+* Renewing loans is not supported, for now.
 
-Renewing loans is not supported, for now.
+* When reserving a periodical, the reservations list (in ding2 user profile page) will show `Title not available` as item title.
 
-When reserving a periodical, the reservations list (in ding2 user profile page) will show `Title not available` as item title.
-This happens because ALMA has it's own internal mechanism of relating items to reservations, this cannot be normally achieved.
+ This happens because ALMA has it's own internal mechanism of relating items to reservations, this cannot be normally achieved.
 
-Item availability is returned randomly on every request.
+* Item availability is returned randomly on every request.
 
-Item details (holdings) are hard-cached. Each item has it's own pre-defined XML response located in the `src/Provider/AlmaBundle/Resources/alma_xml` directory.
-Each file name is `ITEM_LOCAL_ID.xml`.
-To add a new entry there follow the `http://ALMA_PROVIDER_URL:PORT/alma/catalogue/detail?catalogueRecordKey=ITEM_LOCAL_ID` URL in your browser, copy the XML response and create a XML file with those contents in the path described above.
-For items that do not have this pre-defined response, the service will return that this ID is not found.
+* Item details (holdings) are hard-cached. Each item has it's own pre-defined XML response located in the `src/Provider/AlmaBundle/Resources/alma_xml` directory.
+
+ Each file name is `ITEM_LOCAL_ID.xml`.
+
+ To add a new entry there follow the `http://ALMA_PROVIDER_URL:PORT/alma/catalogue/detail?catalogueRecordKey=ITEM_LOCAL_ID` URL in your browser, copy the XML response and create a XML file with those contents in the path described above.
+
+ For items that do not have this pre-defined response, the service will return that this ID is not found.
