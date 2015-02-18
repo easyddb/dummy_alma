@@ -1,170 +1,72 @@
-Symfony Standard Edition
+ALMA Mock Service
 ========================
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony2
-application that you can use as the skeleton for your new applications.
+This application emulates most of the ALMA behavior, used in [ding2](https://github.com/ding2) based instances.
 
-This document contains information on how to download, install, and start
-using Symfony. For a more detailed explanation, see the [Installation][1]
-chapter of the Symfony Documentation.
+The service is based on [Symfony2](http://symfony.com/what-is-symfony)-framework, so some special setup is required when deploying this application.
 
-1) Installing the Standard Edition
-----------------------------------
+By default, the application contains a SQL dump with a single user, couple of reservations, loans and debts.
 
-When it comes to installing the Symfony Standard Edition, you have the
-following options.
+Existing instance located at (http://dummy-alma.inlead.dk/web/).
 
-### Use Composer (*recommended*)
+User credentials are 1111110022/5555 (login/pass).
 
-As Symfony uses [Composer][2] to manage its dependencies, the recommended way
-to create a new project is to use it.
 
-If you don't have Composer yet, download it following the instructions on
-http://getcomposer.org/ or just run the following command:
+Installation
+========================
 
-    curl -s http://getcomposer.org/installer | php
+1. Clone this repository;
 
-Then, use the `create-project` command to generate a new Symfony application:
+2. Copy the `app/config/parameters.yml.dist` file to `app/config/parameters.yml`;
 
-    php composer.phar create-project symfony/framework-standard-edition path/to/install
+3. Edit this file according to your settings.
 
-Composer will install Symfony and all its dependencies under the
-`path/to/install` directory.
+ Normally, only database specific settings are required;
 
-### Download an Archive File
+4. Edit the `web/reset.php` file if reseting service data to it's initial state is planned to be used (useful for unit-testing);
 
-To quickly test Symfony, you can also download an [archive][3] of the Standard
-Edition and unpack it somewhere under your web server root directory.
+5. Create a virtual host, pointing to repository root(!) - not `web` directory;
 
-If you downloaded an archive "without vendors", you also need to install all
-the necessary dependencies. Download composer (see above) and run the
-following command:
+6. Being in the app root, run this command:
 
-    php composer.phar install
+ `php app/console cache:clear -e prod`
 
-2) Checking your System Configuration
--------------------------------------
+ This will clear the cache and make the app accessible in the web;
 
-Before starting coding, make sure that your local system is properly
-configured for Symfony.
+7. Make sure `app/cache` and `app/logs` directories have write permissions for all (i.e. `chmod -R 777`);
 
-Execute the `check.php` script from the command line:
+8. Create the database, with the name provided in the config in steps (2) and (4).
 
-    php app/check.php
+ Import the data dump located in `src/Provider/AlmaBundle/dummy_alma.sql`
 
-The script returns a status code of `0` if all mandatory requirements are met,
-`1` otherwise.
+9. Access the `http://HOST_NAME/web`.
 
-Access the `config.php` script from a browser:
+ There should be initial page with all supported requests and examples of usage.
 
-    http://localhost/path/to/symfony/app/web/config.php
+ Same url is used when setting the provider url in ding2tal instance;
 
-If you get any warnings or recommendations, fix them before moving on.
+10. To reset the database state, ie. restore the data to it's initial state, run `http://HOST_NAME/web/reset.php`.
 
-3) Browsing the Demo Application
---------------------------------
+ The script returns nothing. It just imports the dump again into the database.
 
-Congratulations! You're now ready to use Symfony.
+ This is safe to be called via `curl` or `file_get_contents()`.
 
-From the `config.php` page, click the "Bypass configuration and go to the
-Welcome page" link to load up your first Symfony page.
 
-You can also use a web-based configurator by clicking on the "Configure your
-Symfony Application online" link of the `config.php` page.
+Notes
+========================
 
-To see a real-live Symfony page in action, access the following page:
+* Renewing loans is not supported, for now.
 
-    web/app_dev.php/demo/hello/Fabien
+* When reserving a periodical, the reservations list (in ding2 user profile page) will show `Title not available` as item title.
 
-4) Getting started with Symfony
--------------------------------
+ This happens because ALMA has it's own internal mechanism of relating items to reservations, this cannot be normally achieved.
 
-This distribution is meant to be the starting point for your Symfony
-applications, but it also contains some sample code that you can learn from
-and play with.
+* Item availability is returned randomly on every request.
 
-A great way to start learning Symfony is via the [Quick Tour][4], which will
-take you through all the basic features of Symfony2.
+* Item details (holdings) are hard-cached. Each item has it's own pre-defined XML response located in the `src/Provider/AlmaBundle/Resources/alma_xml` directory.
 
-Once you're feeling good, you can move onto reading the official
-[Symfony2 book][5].
+ Each file name is `ITEM_LOCAL_ID.xml`.
 
-A default bundle, `AcmeDemoBundle`, shows you Symfony2 in action. After
-playing with it, you can remove it by following these steps:
+ To add a new entry there follow the `http://ALMA_PROVIDER_URL:PORT/alma/catalogue/detail?catalogueRecordKey=ITEM_LOCAL_ID` URL in your browser, copy the XML response and create a XML file with those contents in the path described above.
 
-  * delete the `src/Acme` directory;
-
-  * remove the routing entry referencing AcmeDemoBundle in `app/config/routing_dev.yml`;
-
-  * remove the AcmeDemoBundle from the registered bundles in `app/AppKernel.php`;
-
-  * remove the `web/bundles/acmedemo` directory;
-
-  * empty the `security.yml` file or tweak the security configuration to fit
-    your needs.
-
-What's inside?
----------------
-
-The Symfony Standard Edition is configured with the following defaults:
-
-  * Twig is the only configured template engine;
-
-  * Doctrine ORM/DBAL is configured;
-
-  * Swiftmailer is configured;
-
-  * Annotations for everything are enabled.
-
-It comes pre-configured with the following bundles:
-
-  * **FrameworkBundle** - The core Symfony framework bundle
-
-  * [**SensioFrameworkExtraBundle**][6] - Adds several enhancements, including
-    template and routing annotation capability
-
-  * [**DoctrineBundle**][7] - Adds support for the Doctrine ORM
-
-  * [**TwigBundle**][8] - Adds support for the Twig templating engine
-
-  * [**SecurityBundle**][9] - Adds security by integrating Symfony's security
-    component
-
-  * [**SwiftmailerBundle**][10] - Adds support for Swiftmailer, a library for
-    sending emails
-
-  * [**MonologBundle**][11] - Adds support for Monolog, a logging library
-
-  * [**AsseticBundle**][12] - Adds support for Assetic, an asset processing
-    library
-
-  * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
-    the web debug toolbar
-
-  * **SensioDistributionBundle** (in dev/test env) - Adds functionality for
-    configuring and working with Symfony distributions
-
-  * [**SensioGeneratorBundle**][13] (in dev/test env) - Adds code generation
-    capabilities
-
-  * **AcmeDemoBundle** (in dev/test env) - A demo bundle with some example
-    code
-
-All libraries and bundles included in the Symfony Standard Edition are
-released under the MIT or BSD license.
-
-Enjoy!
-
-[1]:  http://symfony.com/doc/2.3/book/installation.html
-[2]:  http://getcomposer.org/
-[3]:  http://symfony.com/download
-[4]:  http://symfony.com/doc/2.3/quick_tour/the_big_picture.html
-[5]:  http://symfony.com/doc/2.3/index.html
-[6]:  http://symfony.com/doc/2.3/bundles/SensioFrameworkExtraBundle/index.html
-[7]:  http://symfony.com/doc/2.3/book/doctrine.html
-[8]:  http://symfony.com/doc/2.3/book/templating.html
-[9]:  http://symfony.com/doc/2.3/book/security.html
-[10]: http://symfony.com/doc/2.3/cookbook/email.html
-[11]: http://symfony.com/doc/2.3/cookbook/logging/monolog.html
-[12]: http://symfony.com/doc/2.3/cookbook/assetic/asset_management.html
-[13]: http://symfony.com/doc/2.3/bundles/SensioGeneratorBundle/index.html
+ For items that do not have this pre-defined response, the service will return that this ID is not found.

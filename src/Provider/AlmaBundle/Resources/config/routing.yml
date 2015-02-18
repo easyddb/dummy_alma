@@ -1,0 +1,56 @@
+homepage:
+    path: /
+    defaults: { _controller: ProviderAlmaBundle:Default:index }
+availability:
+    path: /alma/catalogue/availability
+    defaults: { _controller: ProviderAlmaBundle:Catalogue:availability }
+debts:
+    path: /alma/patron/debts
+    defaults: { _controller: ProviderAlmaBundle:Patron:debts }
+patron:
+    path: /alma/patron/informationExtended
+    defaults: { _controller: ProviderAlmaBundle:Patron:informationExtended }
+patron_preferences:
+    path: /alma/patron/preferences/change
+    defaults: { _controller: ProviderAlmaBundle:Patron:preferencesChange }
+patron_absent:
+    path: /alma/patron/absent/change
+    defaults: { _controller: ProviderAlmaBundle:Patron:absentChange }
+patron_pincode:
+    path: /alma/patron/pinCode/change
+    defaults: { _controller: ProviderAlmaBundle:Patron:pincodeChange }
+loans:
+    path: /alma/patron/loans
+    defaults: { _controller: ProviderAlmaBundle:Patron:loans }
+reservations:
+    path: /alma/patron/reservations
+    defaults: { _controller: ProviderAlmaBundle:Patron:reservations }
+reservations_op:
+    path: /alma/patron/reservations/{op}
+    defaults: { _controller: ProviderAlmaBundle:Patron:reservationsOp, op: add }
+    requirements:
+        op: add|change
+reservations_remove:
+    path: /alma/patron/reservations/remove
+    defaults: { _controller: ProviderAlmaBundle:Patron:reservationsDelete }
+branches_res:
+    path: /alma/reservation/branches
+    defaults: { _controller: ProviderAlmaBundle:Reservation:branches }
+branches_org:
+    path: /alma/organisation/branches
+    defaults: { _controller: ProviderAlmaBundle:Organisation:branches }
+departments:
+    path: /alma/organisation/departments
+    defaults: { _controller: ProviderAlmaBundle:Organisation:departments }
+locations:
+    path: /alma/organisation/locations
+    defaults: { _controller: ProviderAlmaBundle:Organisation:locations }
+sublocations:
+    path: /alma/organisation/subLocations
+    defaults: { _controller: ProviderAlmaBundle:Organisation:sublocations }
+collections:
+    path: /alma/organisation/collections
+    defaults: { _controller: ProviderAlmaBundle:Organisation:collections }
+detail:
+    path: /alma/catalogue/detail
+    defaults: { _controller: ProviderAlmaBundle:Organisation:detail }
