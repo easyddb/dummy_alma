@@ -38,9 +38,9 @@ class CatalogueController extends Controller
         foreach ($ids as $id)
         {
             $record = $records->addChild('catalogueRecord');
-            $is_reservable = mt_rand(0, 1);
+            $is_reservable = 0;
             $record->addAttribute('isReservable', $true_false[$is_reservable]);
-            $is_available = mt_rand(0, 1);
+            $is_available = 1;
             $record->addAttribute('isAvailable', $yes_no[$is_available]);
             $record->addAttribute('id', $id);
         }
