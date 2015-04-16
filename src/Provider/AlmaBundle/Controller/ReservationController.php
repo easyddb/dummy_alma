@@ -35,7 +35,6 @@ class ReservationController extends Controller
             }
         }
 
-
         return $organisations;
     }
 
