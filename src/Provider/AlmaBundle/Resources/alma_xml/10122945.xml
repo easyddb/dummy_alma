@@ -1,2 +1,72 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<AlmaMessage xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:alma="http://www.axiell.com/Schema/alma/v1.0"><getCatalogueRecordDetailResponse><status key="moduleNotAvailable" value="ok"/><detailCatalogueRecord showRegionalReservationRadioGroup="false" reservationButtonStatus="reservationOfPeriodical" showReservationButton="yes" nofReservations="1" nofLoansYear="-1" nofLoansTotal="-1" nofAvailableForLoan="0" titleSeries="(Sociale publikationer ; 5)" targetAudience="a" shelfMark="38.61 &gt; Hedegaard" resourceType="physical" openUrl="&amp;aulast=Hedeg%E5rd%20J%F8rgensen&amp;aufirst=Leif&amp;title=Folkepension%20og%20delpension" mediaClassIcon="periodical" mediaClass="periodical" id="10122945" classificationCode="38.61" category="nonFictionCategory" recordType="catalogue"><authors><author role="author" value="Hedegaard Jørgensen, Leif"/></authors><descriptions><description value="Alt om samfundets service over for vore ældre efter pensionslovgivning, bistandslovgivning og den øvrige sociale lovgivning"/></descriptions><compositeHoldings><compositeHolding status="availableForLoan" value="2014"><compositeHolding status="availableForLoan" value="130. udgave"><holdings><holding reservable="10122945ZXZX130. udgaveZX2014ZXZX" status="nonAvailableForLoan" nofOrdered="0" nofCheckedOut="0" nofReference="0" nofTotal="1" collectionId="28" subLocationId="" locationId="" departmentId="voy" branchId="hj~oe" organisationId="DK-000000" showReservationButton="yes" nofAvailableForLoan="1" shelfMark="38.61 &gt; Hedegaard"/></holdings></compositeHolding></compositeHolding></compositeHoldings><languages><language value="dan"/></languages><notes><note value="Leif Hedegaard Jørgensen"/><note value="Omslagstitel: Folkepension, delpension : oversigt over sociale takster"/><note value="Indgår også i: Social orientering"/><note value="VO har: Sidste udgave. *"/></notes><publisher>Idag</publisher><titles><title value="Folkepension og delpension"/></titles></detailCatalogueRecord></getCatalogueRecordDetailResponse></AlmaMessage>
+<AlmaMessage xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:alma="http://www.axiell.com/Schema/alma/v1.0">
+<getCatalogueRecordDetailResponse>
+<status key="moduleNotAvailable" value="ok"/>
+<detailCatalogueRecord showRegionalReservationRadioGroup="false" recordType="catalogue" showReservationButton="yes" nofReservations="1" nofLoansYear="-1" nofLoansTotal="-1" nofAvailableForLoan="12" titleSeries="(Sociale publikationer ; 5)" targetAudience="a" shelfMark="38.6 > Hedegaard" resourceType="physical" openUrl="&aulast=Hedeg%E5rd%20J%F8rgensen&aufirst=Leif&title=Folkepension%20og%20delpension" mediaClassIcon="periodical" mediaClass="periodical" id="10122945" classificationCode="38.6" category="nonFictionCategory">
+<authors>
+<author role="author" value="Hedegaard Jørgensen, Leif"/>
+</authors>
+<descriptions>
+<description value="Alt om samfundets service over for vore ældre efter pensionslovgivning, bistandslovgivning og den øvrige sociale lovgivning"/>
+</descriptions>
+<compositeHoldings>
+<compositeHolding status="availableForLoan" value="2013">
+<compositeHolding status="availableForLoan" value="129. udgave">
+<holdings>
+<holding reservable="10122945ZX129. udgaveZXZX2013ZXZX" status="inAcquisition" nofOrdered="1" nofCheckedOut="0" nofReference="0" nofTotal="0" collectionId="" subLocationId="" locationId="" departmentId="vo" branchId="bed" organisationId="DK-775100" showReservationButton="yes" nofAvailableForLoan="0" shelfMark="38.6 > Hedegaard"/>
+<holding reservable="10122945ZX129. udgaveZXZX2013ZXZX" status="inAcquisition" nofOrdered="2" nofCheckedOut="0" nofReference="0" nofTotal="0" collectionId="" subLocationId="" locationId="" departmentId="vo" branchId="hb" organisationId="DK-775100" showReservationButton="yes" nofAvailableForLoan="0" shelfMark="38.6 > Hedegaard"/>
+<holding reservable="10122945ZX129. udgaveZXZX2013ZXZX" status="inAcquisition" nofOrdered="1" nofCheckedOut="0" nofReference="0" nofTotal="0" collectionId="" subLocationId="" locationId="" departmentId="vo" branchId="h~oej" organisationId="DK-775100" showReservationButton="yes" nofAvailableForLoan="0" shelfMark="38.6 > Hedegaard"/>
+<holding reservable="10122945ZX129. udgaveZXZX2013ZXZX" status="inAcquisition" nofOrdered="1" nofCheckedOut="0" nofReference="0" nofTotal="0" collectionId="" subLocationId="" locationId="" departmentId="vo" branchId="lys" organisationId="DK-775100" showReservationButton="yes" nofAvailableForLoan="0" shelfMark="38.6 > Hedegaard"/>
+<holding reservable="10122945ZX129. udgaveZXZX2013ZXZX" status="inAcquisition" nofOrdered="1" nofCheckedOut="0" nofReference="0" nofTotal="0" collectionId="" subLocationId="" locationId="" departmentId="vo" branchId="ris" organisationId="DK-775100" showReservationButton="yes" nofAvailableForLoan="0" shelfMark="38.6 > Hedegaard"/>
+<holding reservable="10122945ZX129. udgaveZXZX2013ZXZX" status="inAcquisition" nofOrdered="1" nofCheckedOut="0" nofReference="0" nofTotal="0" collectionId="" subLocationId="" locationId="" departmentId="vo" branchId="tra" organisationId="DK-775100" showReservationButton="yes" nofAvailableForLoan="0" shelfMark="38.6 > Hedegaard"/>
+<holding reservable="10122945ZX129. udgaveZXZX2013ZXZX" status="inAcquisition" nofOrdered="1" nofCheckedOut="0" nofReference="0" nofTotal="0" collectionId="" subLocationId="" locationId="" departmentId="vo" branchId="tri" organisationId="DK-775100" showReservationButton="yes" nofAvailableForLoan="0" shelfMark="38.6 > Hedegaard"/>
+<holding reservable="10122945ZX129. udgaveZXZX2013ZXZX" status="inAcquisition" nofOrdered="1" nofCheckedOut="0" nofReference="0" nofTotal="0" collectionId="" subLocationId="" locationId="" departmentId="vo" branchId="tst" organisationId="DK-775100" showReservationButton="yes" nofAvailableForLoan="0" shelfMark="38.6 > Hedegaard"/>
+<holding reservable="10122945ZX129. udgaveZXZX2013ZXZX" status="inAcquisition" nofOrdered="1" nofCheckedOut="0" nofReference="0" nofTotal="0" collectionId="" subLocationId="" locationId="" departmentId="vo" branchId="vib" organisationId="DK-775100" showReservationButton="yes" nofAvailableForLoan="0" shelfMark="38.6 > Hedegaard"/>
+<holding reservable="10122945ZX129. udgaveZXZX2013ZXZX" status="inAcquisition" nofOrdered="1" nofCheckedOut="0" nofReference="0" nofTotal="0" collectionId="" subLocationId="" locationId="" departmentId="vo" branchId="~aaby" organisationId="DK-775100" showReservationButton="yes" nofAvailableForLoan="0" shelfMark="38.6 > Hedegaard"/>
+</holdings>
+</compositeHolding>
+<compositeHolding status="availableForLoan" value="128. udgave">
+<holdings>
+<holding reservable="10122945ZX128. udgaveZXZX2013ZXZX" status="availableForLoan" nofOrdered="0" nofCheckedOut="0" nofReference="0" nofTotal="1" collectionId="" subLocationId="" locationId="" departmentId="vo" branchId="bed" organisationId="DK-775100" showReservationButton="yes" nofAvailableForLoan="1" shelfMark="38.6 > Hedegaard"/>
+<holding reservable="10122945ZX128. udgaveZXZX2013ZXZX" status="availableForLoan" nofOrdered="0" nofCheckedOut="0" nofReference="0" nofTotal="2" collectionId="" subLocationId="" locationId="" departmentId="vo" branchId="hb" organisationId="DK-775100" showReservationButton="yes" nofAvailableForLoan="2" shelfMark="38.6 > Hedegaard"/>
+<holding reservable="10122945ZX128. udgaveZXZX2013ZXZX" status="availableForLoan" nofOrdered="0" nofCheckedOut="0" nofReference="0" nofTotal="1" collectionId="" subLocationId="" locationId="" departmentId="vo" branchId="h~oej" organisationId="DK-775100" showReservationButton="yes" nofAvailableForLoan="1" shelfMark="38.6 > Hedegaard"/>
+<holding reservable="10122945ZX128. udgaveZXZX2013ZXZX" status="availableForLoan" nofOrdered="0" nofCheckedOut="0" nofReference="0" nofTotal="1" collectionId="" subLocationId="" locationId="" departmentId="vo" branchId="lys" organisationId="DK-775100" showReservationButton="yes" nofAvailableForLoan="1" shelfMark="38.6 > Hedegaard"/>
+<holding reservable="10122945ZX128. udgaveZXZX2013ZXZX" status="availableForLoan" nofOrdered="0" nofCheckedOut="0" nofReference="0" nofTotal="1" collectionId="" subLocationId="" locationId="" departmentId="vo" branchId="ris" organisationId="DK-775100" showReservationButton="yes" nofAvailableForLoan="1" shelfMark="38.6 > Hedegaard"/>
+<holding reservable="10122945ZX128. udgaveZXZX2013ZXZX" status="availableForLoan" nofOrdered="0" nofCheckedOut="0" nofReference="0" nofTotal="1" collectionId="" subLocationId="" locationId="" departmentId="vo" branchId="tra" organisationId="DK-775100" showReservationButton="yes" nofAvailableForLoan="1" shelfMark="38.6 > Hedegaard"/>
+<holding reservable="10122945ZX128. udgaveZXZX2013ZXZX" status="availableForLoan" nofOrdered="0" nofCheckedOut="0" nofReference="0" nofTotal="1" collectionId="" subLocationId="" locationId="" departmentId="vo" branchId="tri" organisationId="DK-775100" showReservationButton="yes" nofAvailableForLoan="1" shelfMark="38.6 > Hedegaard"/>
+<holding reservable="10122945ZX128. udgaveZXZX2013ZXZX" status="availableForLoan" nofOrdered="0" nofCheckedOut="0" nofReference="0" nofTotal="1" collectionId="" subLocationId="" locationId="" departmentId="vo" branchId="tst" organisationId="DK-775100" showReservationButton="yes" nofAvailableForLoan="1" shelfMark="38.6 > Hedegaard"/>
+<holding reservable="10122945ZX128. udgaveZXZX2013ZXZX" status="availableForLoan" nofOrdered="0" nofCheckedOut="0" nofReference="0" nofTotal="1" collectionId="" subLocationId="" locationId="" departmentId="vo" branchId="vib" organisationId="DK-775100" showReservationButton="yes" nofAvailableForLoan="1" shelfMark="38.6 > Hedegaard"/>
+<holding reservable="10122945ZX128. udgaveZXZX2013ZXZX" status="checkedOut" nofOrdered="0" nofCheckedOut="1" nofReference="0" nofTotal="1" collectionId="" subLocationId="" locationId="" departmentId="vo" branchId="~aaby" organisationId="DK-775100" showReservationButton="yes" nofAvailableForLoan="0" shelfMark="38.6 > Hedegaard"/>
+</holdings>
+</compositeHolding>
+<compositeHolding status="availableForLoan" value="127. udgave">
+<holdings>
+<holding reservable="10122945ZX127. udgaveZXZX2013ZXZX" status="availableForLoan" nofOrdered="0" nofCheckedOut="0" nofReference="0" nofTotal="1" collectionId="" subLocationId="" locationId="" departmentId="vo" branchId="tst" organisationId="DK-775100" showReservationButton="yes" nofAvailableForLoan="1" shelfMark="38.6 > Hedegaard"/>
+</holdings>
+</compositeHolding>
+</compositeHolding>
+<compositeHolding status="availableForLoan" value="2012">
+<compositeHolding status="availableForLoan" value="126. udgave">
+<holdings>
+<holding reservable="10122945ZX126. udgaveZXZX2012ZXZX" status="nonAvailableForLoan" nofOrdered="0" nofCheckedOut="0" nofReference="0" nofTotal="1" collectionId="" subLocationId="" locationId="" departmentId="vo" branchId="vib" organisationId="DK-775100" showReservationButton="yes" nofAvailableForLoan="1" shelfMark="38.6 > Hedegaard"/>
+</holdings>
+</compositeHolding>
+<compositeHolding status="availableForLoan" value="123. udgave">
+<holdings>
+<holding reservable="10122945ZX123. udgaveZXZX2012ZXZX" status="checkedOut" nofOrdered="0" nofCheckedOut="1" nofReference="0" nofTotal="1" collectionId="" subLocationId="" locationId="" departmentId="vo" branchId="vib" organisationId="DK-775100" showReservationButton="yes" nofAvailableForLoan="0" shelfMark="38.6 > Hedegaard"/>
+</holdings>
+</compositeHolding>
+</compositeHolding>
+</compositeHoldings>
+<languages>
+<language value="dan"/>
+</languages>
+<notes>
+<note value="Omslagstitel: Folkepension, delpension : oversigt over sociale takster"/>
+<note value="Indgår også i: Social orientering"/>
+</notes>
+<titles>
+<title value="Folkepension og delpension / Leif Hedegaard Jørgensen"/>
+</titles>
+</detailCatalogueRecord>
+</getCatalogueRecordDetailResponse>
+</AlmaMessage>
