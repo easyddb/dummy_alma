@@ -4,7 +4,6 @@ namespace Provider\AlmaBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Provider\AlmaBundle;
-use Symfony\Component\DependencyInjection;
 
 class OrganisationController extends Controller
 {
