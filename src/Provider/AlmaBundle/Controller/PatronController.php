@@ -489,7 +489,7 @@ class PatronController extends Controller
         $this->checkPatronCredentials();
         $key = ($op == 'add') ? 'reservable' : 'reservation';
         $reservable = $this->getRequest()->get($key);
-        $pickup_branch = $this->getRequest()->get('reservationPickUpBranch', 'hj~oe');
+        $pickup_branch = $this->getRequest()->get('reservationPickUpBranch', 'hb');
         $valid_from = $this->getRequest()->get('reservationValidFrom', '');
         $valid_to = $this->getRequest()->get('reservationValidTo', '2025-01-01');
 
@@ -515,9 +515,11 @@ class PatronController extends Controller
             {
                 $criteria['id'] = $reservable;
             }
+
             $reservation = $this->getDoctrine()
                 ->getRepository('ProviderAlmaBundle:Reservations')
                 ->findOneBy($criteria);
+
         }
 
         $state = array(
@@ -535,6 +537,15 @@ class PatronController extends Controller
                 'res_status_value' => 'reservationNotOk',
             );
             $data = $this->createReservationsOpErrorResponse($state);
+        }
+        elseif (!is_object($reservation) && $op == 'change')
+        {
+          $state += array(
+            'status_key' => 'reservationNotFound',
+            'status_value' => 'error',
+          );
+
+          $data = $this->createReservationsOpErrorResponse($state);
         }
         elseif (is_object($reservation) && $op == 'add')
         {
@@ -662,23 +673,25 @@ class PatronController extends Controller
         $status->addAttribute('key', !empty($state['status_key']) ? $state['status_key'] : '');
         $status->addAttribute('value', !empty($state['status_value']) ? $state['status_value'] : '');
 
-        $reservation = $reservation_add_response->addChild('reservation');
-        $reservation->addAttribute('validToDate', !empty($state['valid_to_date']) ? $state['valid_to_date'] : '2025-01-01');
-        $reservation->addAttribute('validFromDate', !empty($state['valid_from_date']) ? $state['valid_from_date'] : '');
-        $reservation->addAttribute('status', 'active');
-        $reservation->addAttribute('reservationType', 'normal');
-        $reservation->addAttribute('reservationPickUpBranch', $state['branch']);
-        $reservation->addAttribute('organisationId', 'DK-000000');
-        $reservation->addAttribute('isEditable', 'no');
-        $reservation->addAttribute('isDeletable', 'no');
-        $reservation->addAttribute('createDate', '');
-        $reservation->addAttribute('id', '0');
+        if ($state['status_value'] != 'error') {
+          $reservation = $reservation_add_response->addChild('reservation');
+          $reservation->addAttribute('validToDate', !empty($state['valid_to_date']) ? $state['valid_to_date'] : '2025-01-01');
+          $reservation->addAttribute('validFromDate', !empty($state['valid_from_date']) ? $state['valid_from_date'] : '');
+          $reservation->addAttribute('status', 'active');
+          $reservation->addAttribute('reservationType', 'normal');
+          $reservation->addAttribute('reservationPickUpBranch', $state['branch']);
+          $reservation->addAttribute('organisationId', 'DK-000000');
+          $reservation->addAttribute('isEditable', 'no');
+          $reservation->addAttribute('isDeletable', 'no');
+          $reservation->addAttribute('createDate', '');
+          $reservation->addAttribute('id', '0');
 
-        $catalogue = $reservation->addChild('catalogueRecord');
-        $catalogue->addAttribute('id', '');
-        $res_status = $reservation->addChild('reservationStatus');
-        $res_status->addAttribute('key', !empty($state['res_status_key']) ? $state['res_status_key'] : '');
-        $res_status->addAttribute('value', !empty($state['res_status_value']) ? $state['res_status_value'] : '');
+          $catalogue = $reservation->addChild('catalogueRecord');
+          $catalogue->addAttribute('id', '');
+          $res_status = $reservation->addChild('reservationStatus');
+          $res_status->addAttribute('key', !empty($state['res_status_key']) ? $state['res_status_key'] : '');
+          $res_status->addAttribute('value', !empty($state['res_status_value']) ? $state['res_status_value'] : '');
+        }
 
         return $xml->asXML();
     }
