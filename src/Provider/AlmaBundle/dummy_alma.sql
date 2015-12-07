@@ -562,10 +562,11 @@ CREATE TABLE `reservations` (
 LOCK TABLES `reservations` WRITE;
 /*!40000 ALTER TABLE `reservations` DISABLE KEYS */;
 INSERT INTO `reservations` VALUES 
-(8,51,1464048000,1448496000,'active','normal',84,1,7,'yes','yes',1448496000,12846996,'95602797','reservationOnShelf','reservationOk','2012, Januar, 1',0,0),
-(25,51,1457136000,1426032000,'active','normal',84,1,7,'yes','yes',1426032000,12846959,'43544055','reservationOnShelf','reservationOk','2012, December, Nr. 092',0,0),
-(26,51,1441584000,1426032000,'active','normal',84,1,7,'yes','yes',1426032000,12846957,'20401206','reservationOnShelf','reservationOk','2012, 15',0,0),
-(27,51,1465948800,1434844800,'active','normal',84,1,7,'yes','yes',1434844800,12846965,'23149532','reservationOnShelf','reservationOk','',0,0);
+(1,51,1464048000,1448496000,'active','normal',84,1,7,'yes','yes',1448496000,12846996,'95602797','reservationOnShelf','reservationOk','2012, Januar, 1',0,0),
+(2,51,1457136000,1426032000,'active','normal',84,1,7,'yes','yes',1426032000,12846959,'43544055','reservationOnShelf','reservationOk','2012, December, Nr. 092',0,0),
+(3,51,1441584000,1426032000,'active','normal',84,1,7,'yes','yes',1426032000,12846957,'20401206','reservationOnShelf','reservationOk','2012, 15',0,0),
+(4,51,1465948800,1434844800,'active','normal',84,1,7,'yes','yes',1434844800,12846965,'23149532','reservationOnShelf','reservationOk','',0,0),
+(5,51,1393891200,1378339200,'fetchable','normal',84,0,7,'no','yes',1378339200,12830568,'29569894','reservationOnShelf','reservationOk','',365,1378944000);
 /*!40000 ALTER TABLE `reservations` ENABLE KEYS */;
 UNLOCK TABLES;
 
