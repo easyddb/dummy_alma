@@ -1,15 +1,17 @@
 ALMA Mock Service
 ========================
 
-This application emulates most of the ALMA behavior, used in [ding2](https://github.com/ding2) based instances.
+This application emulates most of the ALMA provider behavior, used in [ding2](https://github.com/ding2/ding2) based instances.
 
 The service is based on [Symfony2](http://symfony.com/what-is-symfony)-framework, so some special setup is required when deploying this application.
 
 By default, the application contains a SQL dump with a single user, couple of reservations, loans and debts.
 
-Existing instance located at (http://dummy-alma.inlead.dk/web/).
+Example instance located at (http://dummy-alma.inlead.dk/web/).
 
-User credentials are 1111110022/5555 (login/pass).
+Test users (login/pass):
+3206596642/12345
+3207795592/12345
 
 
 Installation
@@ -61,12 +63,13 @@ Notes
 
  This happens because ALMA has it's own internal mechanism of relating items to reservations, this cannot be normally achieved.
 
-* Item availability is returned randomly on every request.
+* Item availability is returned always as available (TRUE).
 
 * Item details (holdings) are hard-cached. Each item has it's own pre-defined XML response located in the `src/Provider/AlmaBundle/Resources/alma_xml` directory.
 
  Each file name is `ITEM_LOCAL_ID.xml`.
 
  To add a new entry there follow the `http://ALMA_PROVIDER_URL:PORT/alma/catalogue/detail?catalogueRecordKey=ITEM_LOCAL_ID` URL in your browser, copy the XML response and create a XML file with those contents in the path described above.
+ Important: Do not copy the contents directly from browser window (this output cannot be parsed by SimpleXml). Instead, see the generated markup of the page and copy it's contents into the destination file.
 
- For items that do not have this pre-defined response, the service will return that this ID is not found.
+ For items that do not have this pre-defined response, the service will return that an item with this ID was not found.
